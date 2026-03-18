@@ -28,8 +28,7 @@ set showmode
 set number
 set relativenumber
 set showcmd
-set incsearch
-
+set background=dark
 set wildmenu
 set wildmode=longest:full,full
 
@@ -44,20 +43,20 @@ autocmd VimEnter * if filereadable(expand("~/.vimrc.path")) |	source ~/.vimrc.pa
 let mapleader = ";"
 " let mapleader = " "
 " nnoremap <SPACE> <Nop>
-
-colorscheme gotham256
-
+let g:gruvbox_bold = 1
+let g:gruvbox_italic = 1
+colorscheme gruvbox
+hi Normal guibg=#32302f
 if has("patch-8.1.0360")
   set diffopt+=internal,algorithm:patience
 endif
 
 " --- FZF settings with bat preview ---
-let $BAT_THEME='gotham'
+let $BAT_THEME='gruvbox'
 let $FZF_DEFAULT_OPTS='--color=16 --reverse --border'
 let g:fzf_preview_window = ['right:60%:wrap']
-
 if executable('bat')
-  let g:fzf_preview_command = 'bat -A --style=numbers --color=always --theme=gotham --line-range :500 {}'
+  let g:fzf_preview_command = 'bat -A --style=numbers --color=always --theme=gotham256 --line-range :500 {}'
 else
   let g:fzf_preview_command = 'cat {}'
 endif
@@ -75,7 +74,6 @@ let g:nerdtree_vis_confirm_move = 0
 let g:nerdtree_vis_confirm_append_arglist = 0
 let g:nerdtree_vis_confirm_set_arglist = 0
 let g:NERDTreeHijackNetrw = 1
-
 
 xnoremap <leader>n :call NERDTreeVisualSelection()<CR>
 nnoremap <leader>n :NERDTreeFocus<CR>
@@ -166,9 +164,10 @@ nnoremap <leader>7 7gt
 nnoremap <leader>8 8gt
 nnoremap <leader>9 9gt
 
+vnoremap <leader>y :OSCYank<CR>
 nmap <F8> :TagbarToggle<CR>
 
-" --- VIM CTag ---
+" --- VIM Tag ---
 let g:gutentags_enabled = 1
 let g:gutentags_ctags_executable = 'ctags'
 let g:gutentags_cache_dir = '~/.cache/tags'
@@ -177,7 +176,7 @@ let g:gutentags_add_default_project_roots = 0
 
 " --- VIM lightline ---
 let g:lightline = {
-      \ 'colorscheme': 'gotham256',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -186,7 +185,6 @@ let g:lightline = {
       \   'gitbranch': 'FugitiveHead'
       \ },
       \ }
-"--- VIM CLIPBOARDS ---"
 function! OSC52YankFromRegister()
     let l:save_reg = getreg('"')
     let l:save_type = getregtype('"')
